@@ -1,0 +1,60 @@
+@startuml
+
+title Bridge Pattern - Exam Data Analysis System
+header
+Author: 由添硕
+Email: youtianshuo90@gmail.com
+Date: 2024-12-22
+endheader
+
+abstract class Analysis {
+    -exporter: DataExporter
+    +analyze(): void
+    +export(): void
+    #{abstract} doAnalysis(): String
+}
+
+interface DataExporter {
+    +export(String data): void
+}
+
+class PaperAnalysis {
+    +doAnalysis(): String
+}
+
+class QuestionAnalysis {
+    +doAnalysis(): String
+}
+
+class KnowledgePointAnalysis {
+    +doAnalysis(): String
+}
+
+class ExcelExporter {
+    +export(String data): void
+}
+
+class WordExporter {
+    +export(String data): void
+}
+
+class ImageExporter {
+    +export(String data): void
+}
+
+Analysis o-right-> DataExporter
+Analysis <|-- PaperAnalysis
+Analysis <|-- QuestionAnalysis
+Analysis <|-- KnowledgePointAnalysis
+DataExporter <|.. ExcelExporter
+DataExporter <|.. WordExporter
+DataExporter <|.. ImageExporter
+
+note right of Analysis
+  Bridge Pattern:
+  1. Separates analysis types from export formats
+  2. Both hierarchies can evolve independently
+  3. New analysis types or export formats can be added easily
+end note
+
+@enduml

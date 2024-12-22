@@ -1,0 +1,63 @@
+@startuml
+
+title Bridge Pattern - Image Processing App
+header
+Author: 由添硕
+Email: youtianshuo90@gmail.com
+Date: 2024-12-22
+endheader
+
+abstract class Image {
+    -filter: ImageFilter
+    +process(): void
+    +{abstract} parseFile(): void
+}
+
+interface ImageFilter {
+    +apply(String image): void
+}
+
+class JPGImage {
+    +parseFile(): void
+}
+
+class GIFImage {
+    +parseFile(): void
+}
+
+class BMPImage {
+    +parseFile(): void
+}
+
+class CutoutFilter {
+    +apply(String image): void
+}
+
+class BlurFilter {
+    +apply(String image): void
+}
+
+class SharpenFilter {
+    +apply(String image): void
+}
+
+class TextureFilter {
+    +apply(String image): void
+}
+
+Image o-right-> ImageFilter
+Image <|-- JPGImage
+Image <|-- GIFImage
+Image <|-- BMPImage
+ImageFilter <|.. CutoutFilter
+ImageFilter <|.. BlurFilter
+ImageFilter <|.. SharpenFilter
+ImageFilter <|.. TextureFilter
+
+note right of Image
+  Bridge Pattern:
+  Separates abstraction (Image)
+  from implementation (Filter)
+end note
+
+@enduml

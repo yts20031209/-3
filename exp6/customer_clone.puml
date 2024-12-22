@@ -1,0 +1,45 @@
+@startuml
+
+title Prototype Pattern - Customer Clone Example
+header
+Author: 由添硕
+Email: youtianshuo90@gmail.com
+Date: 2024-12-22
+endheader
+
+class Customer implements Cloneable {
+    -name: String
+    -address: Address
+    +clone(): Object
+    +deepClone(): Customer
+}
+
+class Address implements Cloneable {
+    -street: String
+    -city: String
+    -country: String
+    +clone(): Object
+}
+
+class Client {
+    +main(args: String[]): void
+}
+
+Customer --> Address
+Client ..> Customer
+
+note right of Customer
+  Shallow Clone:
+  - Creates new Customer object
+  - Copies primitive fields
+  - Copies reference to Address
+end note
+
+note right of Address
+  Deep Clone:
+  - Creates new Customer object
+  - Copies primitive fields
+  - Creates new Address object
+end note
+
+@enduml

@@ -1,0 +1,47 @@
+@startuml
+
+title Composite Pattern - Course Resource Library
+header
+Author: 由添硕
+Email: youtianshuo90@gmail.com
+Date: 2024-12-22
+endheader
+
+interface ResourceComponent {
+    +publish(): void
+    +delete(): void
+    +move(String destination): void
+    +add(ResourceComponent component): void
+    +remove(ResourceComponent component): void
+    +getChild(int i): ResourceComponent
+}
+
+class ResourceFile implements ResourceComponent {
+    -name: String
+    -type: String
+    +publish(): void
+    +delete(): void
+    +move(String destination): void
+}
+
+class ResourceGroup implements ResourceComponent {
+    -name: String
+    -resources: List<ResourceComponent>
+    +publish(): void
+    +delete(): void
+    +move(String destination): void
+    +add(ResourceComponent component): void
+    +remove(ResourceComponent component): void
+    +getChild(int i): ResourceComponent
+}
+
+ResourceGroup o--> "many" ResourceComponent
+
+note right of ResourceComponent
+  Composite Pattern:
+  1. Uniform treatment of files and groups
+  2. Recursive operations (publish, delete, move)
+  3. Easy to add new resource types
+end note
+
+@enduml

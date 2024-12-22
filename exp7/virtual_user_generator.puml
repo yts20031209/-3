@@ -1,0 +1,52 @@
+@startuml
+
+title Singleton Pattern - Virtual User Generator
+header
+Author: 由添硕
+Email: youtianshuo90@gmail.com
+Date: 2024-12-22
+endheader
+
+class VirtualUserGenerator_Eager {
+    -instance: VirtualUserGenerator_Eager {static}
+    -VirtualUserGenerator_Eager()
+    +getInstance(): VirtualUserGenerator_Eager {static}
+    +generateUser(): void
+}
+
+class VirtualUserGenerator_DCL {
+    -instance: VirtualUserGenerator_DCL {static}
+    -VirtualUserGenerator_DCL()
+    +getInstance(): VirtualUserGenerator_DCL {static}
+    +generateUser(): void
+}
+
+class VirtualUserGenerator_Holder {
+    -VirtualUserGenerator_Holder()
+    +getInstance(): VirtualUserGenerator_Holder {static}
+    +generateUser(): void
+}
+
+class Holder {
+    -INSTANCE: VirtualUserGenerator_Holder {static}
+}
+
+VirtualUserGenerator_Holder +-- Holder
+
+note right of VirtualUserGenerator_Eager
+  Eager Initialization:
+  Instance created when class loads
+end note
+
+note right of VirtualUserGenerator_DCL
+  Double-Checked Locking:
+  Thread-safe lazy initialization
+end note
+
+note right of VirtualUserGenerator_Holder
+  Initialization on Demand Holder:
+  Thread-safe lazy initialization
+  using class initialization
+end note
+
+@enduml

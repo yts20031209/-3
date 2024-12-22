@@ -1,0 +1,86 @@
+@startuml
+
+title Bridge Pattern & Factory Pattern - Message Notification System
+header
+Author: 由添硕
+Email: youtianshuo90@gmail.com
+Date: 2024-12-22
+endheader
+
+' Bridge Pattern
+abstract class Message {
+    -sender: MessageSender
+    +send(): void
+    #{abstract} getContent(): String
+}
+
+interface MessageSender {
+    +send(String content): void
+}
+
+class CommonMessage {
+    +getContent(): String
+}
+
+class UrgentMessage {
+    +getContent(): String
+}
+
+class EmergencyMessage {
+    +getContent(): String
+}
+
+class ShortMessageSender {
+    +send(String content): void
+}
+
+class EmailMessageSender {
+    +send(String content): void
+}
+
+class MobileMessageSender {
+    +send(String content): void
+}
+
+Message o-right-> MessageSender
+Message <|-- CommonMessage
+Message <|-- UrgentMessage
+Message <|-- EmergencyMessage
+MessageSender <|.. ShortMessageSender
+MessageSender <|.. EmailMessageSender
+MessageSender <|.. MobileMessageSender
+
+' Factory Pattern
+abstract class MessageFactory {
+    +{abstract} createMessage(): Message
+}
+
+class CommonMessageFactory {
+    +createMessage(): Message
+}
+
+class UrgentMessageFactory {
+    +createMessage(): Message
+}
+
+class EmergencyMessageFactory {
+    +createMessage(): Message
+}
+
+MessageFactory <|-- CommonMessageFactory
+MessageFactory <|-- UrgentMessageFactory
+MessageFactory <|-- EmergencyMessageFactory
+
+note right of Message
+  Bridge Pattern:
+  Separates message types from
+  sending mechanisms
+end note
+
+note right of MessageFactory
+  Factory Pattern:
+  Creates different types of
+  messages with appropriate senders
+end note
+
+@enduml

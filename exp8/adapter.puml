@@ -1,0 +1,54 @@
+@startuml
+
+title Adapter Pattern - Encryption Module
+header
+Author: 由添硕
+Email: youtianshuo90@gmail.com
+Date: 2024-12-22
+endheader
+
+' 对象适配器
+class DatabaseOperation {
+    +save(String data)
+}
+
+interface Encryptor {
+    +encrypt(String data): String
+}
+
+class ThirdPartyEncryption {
+    +encode(String data): String
+}
+
+class ObjectAdapter implements Encryptor {
+    -thirdPartyEncryption: ThirdPartyEncryption
+    +encrypt(String data): String
+}
+
+class Client {
+    -encryptor: Encryptor
+    -dbOperation: DatabaseOperation
+    +saveEncryptedData(String data)
+}
+
+Client --> Encryptor
+Client --> DatabaseOperation
+ObjectAdapter --> ThirdPartyEncryption
+Encryptor <|.. ObjectAdapter
+
+' 类适配器
+class ClassAdapter extends ThirdPartyEncryption implements Encryptor {
+    +encrypt(String data): String
+}
+
+note right of ObjectAdapter
+  Object Adapter:
+  Uses composition to adapt ThirdPartyEncryption
+end note
+
+note right of ClassAdapter
+  Class Adapter:
+  Uses inheritance to adapt ThirdPartyEncryption
+end note
+
+@enduml

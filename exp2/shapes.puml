@@ -1,0 +1,106 @@
+@startuml
+
+title Initial Shape Library Design
+header
+Author: 由添硕
+Email: youtianshuo90@gmail.com
+Date: 2024-12-22
+endheader
+
+abstract class Shape {
+  +init()
+  +setColor()
+  +fill()
+  +setSize()
+  +display()
+}
+
+class Circle {
+  +init()
+  +setColor()
+  +fill()
+  +setSize()
+  +display()
+}
+
+class Triangle {
+  +init()
+  +setColor()
+  +fill()
+  +setSize()
+  +display()
+}
+
+class Client {
+  +createShape()
+  +useShape()
+}
+
+Shape <|-- Circle
+Shape <|-- Triangle
+Client --> Shape
+
+note right of Client
+  Problems:
+  1. Direct dependency on concrete shapes
+  2. Need to modify code for new shapes
+  3. Complex shape creation logic
+end note
+
+newpage
+
+title Refactored Shape Library Design using Factory Pattern
+header
+Author: 由添硕
+Email: youtianshuo90@gmail.com
+Date: 2024-12-22
+endheader
+
+abstract class Shape {
+  +init()
+  +setColor()
+  +fill()
+  +setSize()
+  +display()
+}
+
+class Circle {
+  +init()
+  +setColor()
+  +fill()
+  +setSize()
+  +display()
+}
+
+class Triangle {
+  +init()
+  +setColor()
+  +fill()
+  +setSize()
+  +display()
+}
+
+class ShapeFactory {
+  +{static} createShape(String type): Shape
+}
+
+class Client {
+  -factory: ShapeFactory
+  +useShape(String type)
+}
+
+Shape <|-- Circle
+Shape <|-- Triangle
+ShapeFactory ..> Shape
+ShapeFactory ..> Circle
+ShapeFactory ..> Triangle
+Client --> ShapeFactory
+
+note right of ShapeFactory
+  Improvements:
+  1. Factory Pattern isolates object creation
+  2. Open-Closed Principle: Easy to add new shapes
+  3. Client depends on abstraction
+end note
+
+@enduml

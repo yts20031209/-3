@@ -1,0 +1,51 @@
+@startuml
+
+title Simple Factory Pattern for Encryption Library
+header
+Author: 由添硕
+Email: youtianshuo90@gmail.com
+Date: 2024-12-22
+endheader
+
+abstract class Encryptor {
+  +encrypt(String data): String
+  +decrypt(String data): String
+}
+
+class DESEncryptor {
+  +encrypt(String data): String
+  +decrypt(String data): String
+}
+
+class TripleDESEncryptor {
+  +encrypt(String data): String
+  +decrypt(String data): String
+}
+
+class MD5Encryptor {
+  +encrypt(String data): String
+  +decrypt(String data): String
+}
+
+class EncryptorFactory {
+  +{static} getEncryptor(String type): Encryptor
+  -{static} loadConfig(): Properties
+}
+
+class Client {
+  -encryptor: Encryptor
+  +processData(String data)
+}
+
+Encryptor <|-- DESEncryptor
+Encryptor <|-- TripleDESEncryptor
+Encryptor <|-- MD5Encryptor
+EncryptorFactory ..> Encryptor
+Client --> EncryptorFactory
+
+note right of EncryptorFactory
+  Factory loads encryptor type
+  from configuration file
+end note
+
+@enduml

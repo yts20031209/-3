@@ -1,0 +1,50 @@
+@startuml
+
+title Composite Pattern - Social Group System
+header
+Author: 由添硕
+Email: youtianshuo90@gmail.com
+Date: 2024-12-22
+endheader
+
+interface Component {
+    +share(String content): void
+    +add(Component component): void
+    +remove(Component component): void
+    +getChild(int i): Component
+}
+
+class Member implements Component {
+    -name: String
+    +share(String content): void
+    +add(Component component): void
+    +remove(Component component): void
+    +getChild(int i): Component
+}
+
+class Group implements Component {
+    -name: String
+    -components: List<Component>
+    +share(String content): void
+    +add(Component component): void
+    +remove(Component component): void
+    +getChild(int i): Component
+}
+
+class Client {
+    +main(args: String[]): void
+}
+
+Component <|.. Member
+Component <|.. Group
+Group o--> "many" Component
+Client --> Component
+
+note right of Group
+  Composite Pattern:
+  1. Treats individual objects and compositions uniformly
+  2. Allows nested groups
+  3. Simplifies client code
+end note
+
+@enduml

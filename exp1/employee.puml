@@ -1,0 +1,75 @@
+@startuml
+
+title Employee Class Diagram - Original
+' 添加页眉信息
+header
+Author: 由添硕
+Email: youtianshuo90@gmail.com
+Date: 2024-12-22
+endheader
+
+class Employee {
+  -ID: String
+  -name: String
+  -age: int
+  -gender: String
+  -salary: double
+  -workHoursPerMonth: int
+  -leaveDaysPerMonth: int
+  +calculateSalaryByDays(): double
+  +calculateSalaryByHours(): double
+  +displaySalary(): void
+}
+
+note bottom of Employee
+  Problems:
+  1. Single Responsibility Principle violation
+  2. Open-Closed Principle violation
+  3. Mixed responsibilities for full-time and part-time employees
+end note
+
+newpage
+
+title Employee Class Diagram - Refactored
+' 添加页眉信息
+header
+Author: 由添硕
+Email: youtianshuo90@gmail.com
+Date: 2024-12-22
+endheader
+
+' 创建抽象员工类
+abstract class Employee {
+  #ID: String
+  #name: String
+  #age: int
+  #gender: String
+  #salary: double
+  +{abstract} calculateSalary(): double
+  +displaySalary(): void
+}
+
+' 全职员工类
+class FullTimeEmployee {
+  -leaveDaysPerMonth: int
+  +calculateSalary(): double
+}
+
+' 兼职员工类
+class PartTimeEmployee {
+  -workHoursPerMonth: int
+  +calculateSalary(): double
+}
+
+' 建立继承关系
+Employee <|-- FullTimeEmployee
+Employee <|-- PartTimeEmployee
+
+note right of Employee
+  Improvements:
+  1. Single Responsibility Principle: Each class has a single purpose
+  2. Open-Closed Principle: Easy to extend with new employee types
+  3. Liskov Substitution Principle: Subtypes can replace base type
+end note
+
+@enduml

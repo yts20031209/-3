@@ -1,0 +1,97 @@
+@startuml
+
+title Abstract Factory Pattern for FPS Game Scene
+header
+Author: 由添硕
+Email: youtianshuo90@gmail.com
+Date: 2024-12-22
+endheader
+
+interface Map {
+    +load(): void
+}
+
+interface Weather {
+    +apply(): void
+}
+
+interface Sound {
+    +play(): void
+}
+
+class DesertMap {
+    +load(): void
+}
+
+class SnowMap {
+    +load(): void
+}
+
+class SunnyWeather {
+    +apply(): void
+}
+
+class SnowyWeather {
+    +apply(): void
+}
+
+class DesertSound {
+    +play(): void
+}
+
+class SnowSound {
+    +play(): void
+}
+
+abstract class SceneFactory {
+    +{abstract} createMap(): Map
+    +{abstract} createWeather(): Weather
+    +{abstract} createSound(): Sound
+}
+
+class DesertSceneFactory {
+    +createMap(): Map
+    +createWeather(): Weather
+    +createSound(): Sound
+}
+
+class SnowSceneFactory {
+    +createMap(): Map
+    +createWeather(): Weather
+    +createSound(): Sound
+}
+
+class GameClient {
+    -factory: SceneFactory
+    +createScene(String type)
+    +loadScene()
+}
+
+Map <|.. DesertMap
+Map <|.. SnowMap
+Weather <|.. SunnyWeather
+Weather <|.. SnowyWeather
+Sound <|.. DesertSound
+Sound <|.. SnowSound
+
+SceneFactory <|-- DesertSceneFactory
+SceneFactory <|-- SnowSceneFactory
+
+DesertSceneFactory ..> DesertMap
+DesertSceneFactory ..> SunnyWeather
+DesertSceneFactory ..> DesertSound
+
+SnowSceneFactory ..> SnowMap
+SnowSceneFactory ..> SnowyWeather
+SnowSceneFactory ..> SnowSound
+
+GameClient --> SceneFactory
+
+note right of SceneFactory
+  Abstract Factory Pattern:
+  1. Creates families of related objects
+  2. Easy to add new scene types
+  3. Ensures compatibility within a scene
+end note
+
+@enduml

@@ -1,0 +1,59 @@
+@startuml
+
+title Composite Pattern - 3D Game Structure
+header
+Author: 由添硕
+Email: youtianshuo90@gmail.com
+Date: 2024-12-22
+endheader
+
+interface Structure3D {
+    +draw(): void
+    +setColor(Color color): void
+    +add(Structure3D component): void
+    +remove(Structure3D component): void
+    +getChild(int i): Structure3D
+}
+
+class Block3D implements Structure3D {
+    -components: List<Structure3D>
+    -color: Color
+    +draw(): void
+    +setColor(Color color): void
+    +add(Structure3D component): void
+    +remove(Structure3D component): void
+    +getChild(int i): Structure3D
+}
+
+class Cube implements Structure3D {
+    -color: Color
+    +draw(): void
+    +setColor(Color color): void
+}
+
+class Cylinder implements Structure3D {
+    -color: Color
+    +draw(): void
+    +setColor(Color color): void
+}
+
+class Pyramid implements Structure3D {
+    -color: Color
+    +draw(): void
+    +setColor(Color color): void
+}
+
+Block3D o--> "many" Structure3D
+Structure3D <|.. Block3D
+Structure3D <|.. Cube
+Structure3D <|.. Cylinder
+Structure3D <|.. Pyramid
+
+note right of Structure3D
+  Composite Pattern for 3D Structures:
+  1. Uniform color operations
+  2. Complex structures from simple shapes
+  3. Recursive drawing operations
+end note
+
+@enduml

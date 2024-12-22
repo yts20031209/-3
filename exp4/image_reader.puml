@@ -1,0 +1,56 @@
+@startuml
+
+title Factory Method Pattern for Image Reader
+header
+Author: 由添硕
+Email: youtianshuo90@gmail.com
+Date: 2024-12-22
+endheader
+
+interface ImageReader {
+    +read(String filename): void
+}
+
+class GifReader {
+    +read(String filename): void
+}
+
+class JpgReader {
+    +read(String filename): void
+}
+
+abstract class ImageReaderFactory {
+    +{abstract} createReader(): ImageReader
+}
+
+class GifReaderFactory {
+    +createReader(): ImageReader
+}
+
+class JpgReaderFactory {
+    +createReader(): ImageReader
+}
+
+class Client {
+    -factory: ImageReaderFactory
+    +setFactory(ImageReaderFactory factory)
+    +readImage(String filename)
+}
+
+ImageReader <|.. GifReader
+ImageReader <|.. JpgReader
+ImageReaderFactory <|-- GifReaderFactory
+ImageReaderFactory <|-- JpgReaderFactory
+GifReaderFactory ..> GifReader
+JpgReaderFactory ..> JpgReader
+Client --> ImageReaderFactory
+Client ..> ImageReader
+
+note right of ImageReaderFactory
+  Factory Method Pattern:
+  1. Defines interface for creating objects
+  2. Lets subclasses decide which class to instantiate
+  3. Defers instantiation to subclasses
+end note
+
+@enduml
